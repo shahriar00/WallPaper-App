@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddWallPaper extends StatefulWidget {
   const AddWallPaper({super.key});
@@ -12,6 +13,18 @@ class AddWallPaper extends StatefulWidget {
 class _AddWallPaperState extends State<AddWallPaper> {
   final List<String> categoryItem = ["nature", "wild", "food", "city"];
   String? value;
+
+  ImagePicker? imagePicker = new ImagePicker();
+  File? selectedImage;
+
+  Future getImage()async{
+    var image = await imagePicker!.pickImage(source: ImageSource.gallery);
+
+    selectedImage = File(image!.path as List<Object>,image.path);
+    setState(() {
+      
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,19 +48,24 @@ class _AddWallPaperState extends State<AddWallPaper> {
            const SizedBox(
               height: 20,
             ),
-            Center(
-              child: Material(
-                elevation: 4,
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  width: 250,
-                  height: 300,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black, width: 1.5),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    color: Colors.black,
+            GestureDetector(
+              onTap: (){ 
+                getImage();
+              },
+              child: Center(
+                child: Material(
+                  elevation: 4,
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: 250,
+                    height: 300,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 1.5),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Icon(
+                      Icons.camera_alt_outlined,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
